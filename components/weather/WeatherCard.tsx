@@ -17,7 +17,7 @@ const WeatherCard = ({ weather }: Props) => {
     <article className="max-w-[32rem] aspect-[3/2] grid grid-cols-3 grid-rows-3 justify-center items-center justify-items-center ring-2 bg-gray-500 ring-gray-100 rounded-lg">
       <h2 className="text-2xl text-center font-semibold text-gray-300 col-span-3 border-b-1">
         Right now in&nbsp;
-        <span className="font-black underline">{weather.name} </span> the weather is: {currentWeather.description}
+        <span className="font-black underline">{weather.name}</span> the weather is: {currentWeather.description}
       </h2>
       <Image
         src={getWeatherIconUrl(currentWeather.icon)}
@@ -30,13 +30,13 @@ const WeatherCard = ({ weather }: Props) => {
         <p className="text-4xl font-bold">{weather.main.temp}&nbsp;°C</p>
         <p className="text-sm font-medium">Feels like {weather.main.feels_like}&nbsp;°C</p>
       </section>
-      <section className="text-white transition-all ease-in-out">
+      <section className="text-white ease-in-out">
         <div className="flex items-center">
           <BsWind className="mr-1" />
           <p className="text-sm font-medium">{weather.wind.speed}&nbsp;m/s</p>
         </div>
         <div className="flex items-center">
-          <BsArrowUp style={{ transform: `rotate(${-weather.wind.deg}deg)` }} className="mr-1" />
+          <BsArrowUp style={{ transform: `rotate(${weather.wind.deg}deg)` }} className="mr-1" />
           <p className="text-sm font-medium">{weather.wind.deg}&nbsp;°</p>
         </div>
         <div className="flex items-center">

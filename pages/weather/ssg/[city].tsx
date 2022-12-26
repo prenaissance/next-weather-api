@@ -1,7 +1,8 @@
 import WeatherCard from "@components/weather/WeatherCard";
 import WeatherLayout from "@components/weather/WeatherLayout";
+import { getCityList } from "@services/weather/cityList";
 import { getWeatherByCity, WeatherResponse } from "@services/weather/weatherByCity";
-import { GetServerSideProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 import React from "react";
 
 type Props = {
@@ -16,14 +17,26 @@ const CityWeather = ({ weather }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  const { city } = context.query;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const defaultCities = await getCityList();
+  const paths = defaultCities.map(city => ({
+    params: { city },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
 
-  const weather = await getWeatherByCity(city as string);
+export const getStaticProps: GetStaticProps = async context => {
+  const { city } = context.params as { city: string };
+
+  const weather = await getWeatherByCity(city);
   return {
     props: {
       weather,
     },
+    revalidate: 360,
   };
 };
 
